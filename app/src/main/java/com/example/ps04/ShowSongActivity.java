@@ -10,8 +10,9 @@ import java.util.ArrayList;
 public class ShowSongActivity extends AppCompatActivity {
 
     ListView lv;
-    ArrayList<Song> aa;
-    SongsArrayAdapter al;
+    ArrayList<Song> al;
+    SongsArrayAdapter aa;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -19,9 +20,16 @@ public class ShowSongActivity extends AppCompatActivity {
 
         lv = findViewById(R.id.listViewSongs);
 
+        al = new ArrayList<Song>();
+
         DBHelper db = new DBHelper(ShowSongActivity.this);
-        aa = db.getAllSongs();
-        al = new SongsArrayAdapter(ShowSongActivity.this, R.layout.row, aa);
-        lv.setAdapter(al);
+
+        ArrayList<Song> arrayList = db.getAllSongs();
+        al.addAll(arrayList);
+        db.close();
+
+        aa = new SongsArrayAdapter(ShowSongActivity.this, R.layout.row, al);
+        lv.setAdapter(aa);
+
     }
 }

@@ -68,11 +68,14 @@ public class MainActivity extends AppCompatActivity {
                     rgBtn = (RadioButton) findViewById(selectedId);
                     String number = rgBtn.getText().toString();
                     int num = Integer.parseInt(number);
-                    db.insertSong(title, singer, year, num);
-                    db.close();
 
-                    Toast.makeText(MainActivity.this, "Inserted",
-                            Toast.LENGTH_LONG).show();
+                    long inserted_id = db.insertSong(title, singer, year, num);
+
+                    if (inserted_id != -1){
+                        Toast.makeText(MainActivity.this, "Inserted Successfully",
+                                Toast.LENGTH_LONG).show();
+                    }
+
                 }
             }
         });

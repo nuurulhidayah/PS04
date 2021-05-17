@@ -21,7 +21,7 @@ public class SongsArrayAdapter extends ArrayAdapter<Song> {
     TextView tvYear, tvSinger, tvTitle;
 
     public SongsArrayAdapter(Context context, int resource, ArrayList<Song> songs) {
-        super(context, resource);
+        super(context, resource, songs);
         this.context = context;
         this.songs = songs;
         this.resource = resource;
@@ -44,7 +44,7 @@ public class SongsArrayAdapter extends ArrayAdapter<Song> {
 
         Song song = songs.get(position);
 
-        tvYear.setText(song.getYear());
+        tvYear.setText("" + song.getYear());
         tvSinger.setText(song.getSinger());
         tvTitle.setText(song.getTitle());
 
@@ -90,6 +90,6 @@ public class SongsArrayAdapter extends ArrayAdapter<Song> {
         }
 
 
-        return super.getView(position, convertView, parent);
+        return rowView;
     }
 }

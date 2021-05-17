@@ -13,7 +13,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
     //TODO Define the Database properties
     private static final String DATABASE_NAME = "song.db";
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 2;
 
     private static final String TABLE_SONG = "song";
     private static final String COLUMN_ID = "_id";
@@ -42,12 +42,10 @@ public class DBHelper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE_SONG);
-//        onCreate(db);
         db.execSQL("ALTER TABLE " + TABLE_SONG + " ADD COLUMN module_name TEXT ");
     }
 
-    public void insertSong(String title, String singer, int year, int stars) {
+    public long insertSong(String title, String singer, int year, int stars) {
         //TODO insert the data into the database
         // Get an instance of the database for writing
         SQLiteDatabase db = this.getWritableDatabase();
@@ -60,9 +58,12 @@ public class DBHelper extends SQLiteOpenHelper {
         values.put(COLUMN_YEAR, year);
         values.put(COLUMN_STARS, stars);
         // Insert the row into the TABLE_TASK
-        db.insert(TABLE_SONG, null, values);
+        long result = db.insert(TABLE_SONG, null, values);
+        Log.d("SQL Insert","ID:"+ result); //id returned, shouldn’t be -1
         // Close the database connection
         db.close();
+        Log.d("SQL Insert","ID:"+ result); //id returned, shouldn’t be -1
+        return result;
     }
 
     public ArrayList<Song> getAllSongs() {
@@ -86,7 +87,7 @@ public class DBHelper extends SQLiteOpenHelper {
                 String singer = cursor.getString(2);
                 int year = cursor.getInt(3);
                 int stars = cursor.getInt(4);
-                Song song = new Song(title, singer, year, stars);
+                Song song = new Song(id, title, singer, year, stars);
                 songs.add(song);
             } while (cursor.moveToNext());
         }
@@ -104,7 +105,7 @@ public class DBHelper extends SQLiteOpenHelper {
         values.put(COLUMN_STARS, data.getStars());
 
         String condition = COLUMN_ID + "= ?";
-        String[] args = {String.valueOf(data.getId())};
+        String[] args = {String.valueOf(data.get_id())};
         int result = db.update(TABLE_SONG, values, condition, args);
         db.close();
         return result;
