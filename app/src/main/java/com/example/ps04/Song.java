@@ -1,14 +1,15 @@
 package com.example.ps04;
 
-public class Song {
+import java.io.Serializable;
+
+public class Song implements Serializable {
     private int id;
     private String title;
     private String singer;
     private int year;
     private int stars;
 
-    public Song(int id, String title, String singer, int year, int stars) {
-        this.id = id;
+    public Song(String title, String singer, int year, int stars) {
         this.title = title;
         this.singer = singer;
         this.year = year;
