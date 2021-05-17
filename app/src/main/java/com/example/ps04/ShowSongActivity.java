@@ -11,7 +11,7 @@ public class ShowSongActivity extends AppCompatActivity {
 
     ListView lv;
     ArrayList<Song> aa;
-
+    SongsArrayAdapter al;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -19,5 +19,9 @@ public class ShowSongActivity extends AppCompatActivity {
 
         lv = findViewById(R.id.listViewSongs);
 
+        DBHelper db = new DBHelper(ShowSongActivity.this);
+        aa = db.getAllSongs();
+        al = new SongsArrayAdapter(ShowSongActivity.this, R.layout.row, aa);
+        lv.setAdapter(al);
     }
 }
