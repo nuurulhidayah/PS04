@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ListView;
 
 import java.util.ArrayList;
@@ -15,6 +16,7 @@ public class ShowSongActivity extends AppCompatActivity {
     ListView lv;
     ArrayList<Song> al;
     SongsArrayAdapter aa;
+    Button btnFilter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,6 +24,7 @@ public class ShowSongActivity extends AppCompatActivity {
         setContentView(R.layout.activity_show_song);
 
         lv = findViewById(R.id.listViewSongs);
+        btnFilter = (Button) this.findViewById(R.id.buttonFilter);
 
         al = new ArrayList<Song>();
 
@@ -41,6 +44,19 @@ public class ShowSongActivity extends AppCompatActivity {
                         ModifySongActivity.class);
                 i.putExtra("data", target);
                 startActivityForResult(i, 9);
+            }
+        });
+
+        btnFilter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                al = new ArrayList<Song>();DBHelper dbh = new DBHelper(ShowSongActivity.this);
+                al.clear();
+                al.addAll(dbh.getAll5Stars());
+                dbh.close();
+                aa = new SongsArrayAdapter(ShowSongActivity.this, R.layout.row, al);
+                lv.setAdapter(aa);
+
             }
         });
     }
