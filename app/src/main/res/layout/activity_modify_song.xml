@@ -8,6 +8,20 @@
     tools:context=".ModifySongActivity">
 
     <TextView
+        android:id="@+id/textViewID"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Song ID" />
+
+
+    <EditText
+        android:id="@+id/editTextID"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="none"
+        android:text="ID" />
+
+    <TextView
         android:id="@+id/textViewTitle2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
